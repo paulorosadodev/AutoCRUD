@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto CRUD</title>
+    <style>
+        
+        * {
+            margin: 0;
+            font-family: 'arial';
+        }
+
+        .edit {
+            text-decoration: none; 
+            color: #007bff; 
+            margin-left: 10px;
+        }
+
+        .edit:hover {
+            color: #0056b3;
+        }
+
+        .delete {
+            text-decoration: none; 
+            color: #FF6E6E;
+        }
+
+        .delete:hover {
+            color: #CC5A5A;
+        }
+
+        .plus {
+            border: none;
+            border-radius: 5px;
+            color: white;
+            background-color: #6EC4FF;
+            padding: 2px 10px;
+            text-align: right;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .plus:hover {
+            background-color: #4EA1FF; /* Altera a cor de fundo ao passar o mouse sobre o botão */
+            transition: 0.3s;
+        }
+
+        .viewmakes {
+            text-decoration: none;
+            color: white;
+            background-color:#007bff;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 13px;
+        }
+
+        .viewmakes:hover {
+            background-color: #0056b3;
+            transition: 0.3s;
+        }
+
+        label {
+            color: #555; /* Cor do texto das etiquetas */
+            display: inline-block; /* Torna as etiquetas em linha com os campos de entrada */
+            width: 120px; /* Define uma largura fixa para as etiquetas (ajuste conforme necessário) */
+            text-align: center; /* Alinha o texto das etiquetas à direita */
+        }
+
+        .form {
+            margin-top: 25vh; 
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="number"] {
+            padding: 10px; /* Adiciona preenchimento aos campos de entrada */
+            margin-left: -20px; /* Adiciona margem aos campos de entrada */
+            border-radius: 5px; /* Adiciona borda arredondada aos campos de entrada */
+            border: 1px solid #ccc; /* Adiciona uma borda sólida com cor cinza aos campos de entrada */
+        }
+        
+        .input {
+            padding: 10px 20px; /* Adiciona preenchimento aos botões */
+            margin-top: 10px; /* Adiciona margem superior ao botão */
+            border: none; /* Remove a borda do botão */
+            background-color: #007bff; /* Cor de fundo do botão */
+            color: white; /* Cor do texto do botão */
+            border-radius: 5px; /* Adiciona borda arredondada ao botão */
+            cursor: pointer; /* Muda o cursor para o formato de mão ao passar por cima do botão */
+            font-weight: bold;
+        }
+        
+        .input:hover {
+            background-color: #0056b3; /* Altera a cor de fundo ao passar o mouse sobre o botão */
+            transition: 0.3s;
+        }
+        
+        #mensagem {
+            color: green; /* Cor do texto da mensagem de sucesso */
+        }
+
+        .button {
+            margin-top: 20px;
+        }
+
+        .button a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button a:hover {
+            background-color: #0056b3;
+        }
+
+        body {
+            text-align: center;
+            background-image: linear-gradient(to bottom, white, lightgrey);
+            background-size: 100vw 100vh;
+            background-repeat: no-repeat;
+        }
+        
+        h1 {
+            text-align: center;
+            color: black;
+            font-size: 150px;
+            font-family: 'arial';
+        }
+        
+        .botoes {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .button {
+            margin-top: 20px;
+        }
+        
+        .button a{
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            font-family: 'arial'; /* Adiciona a mesma fonte */
+            font-weight: bold; /* Deixa a fonte mais forte */
+            border: none;
+            cursor: pointer; /* Altera o cursor ao passar sobre os botões */
+            width: 200px; /* Define uma largura fixa para os botões */
+            margin-top: 10px;
+        }
+        
+        .button input[type="submit"] {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #FF6E6E;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            font-family: 'arial'; /* Adiciona a mesma fonte */
+            font-weight: bold; /* Deixa a fonte mais forte */
+            border: none;
+            cursor: pointer; /* Altera o cursor ao passar sobre os botões */
+            width: 240px; /* Define uma largura fixa para os botões */
+            margin-top: 10px;
+        }
+        
+        .button a:hover{
+            background-color: #0056b3;
+        }
+        
+        .button input[type="submit"]:hover {
+            background-color: #CC5A5A;
+        }
+        
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            background-image: linear-gradient(to right, #ADD8F9, #0056b3);
+            padding: 10px;
+            color: white;
+            font-family: 'arial';
+        }
+        
+        .navbar img {
+            margin-right: 20px;
+            height: 150px;
+        }
+        
+        .navbar a {
+            text-decoration: none;
+            color: white;
+            margin-right: 20px;
+        }
+        
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            font-size: 12px;
+            font-family: 'arial';
+            width: 100%;
+            height: 100px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            margin-bottom: -50px;
+        }
+
+            /* Estilo para o modal */
+        .modal, .modalAuto, .modal1 {
+            display: none; /* Oculta o modal por padrão */
+            position: fixed; /* Permite que o modal seja posicionado de forma fixa na tela */
+            z-index: 1; /* Define a ordem de empilhamento do modal */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* Adiciona uma barra de rolagem se o conteúdo do modal for muito grande */
+            background-color: rgba(0,0,0,0.4); /* Fundo escuro semi-transparente */
+        }
+        
+        /* Estilo para a tag select */
+        .modal-contentAuto select {
+            padding: 10px; /* Adiciona preenchimento aos campos de seleção */
+            margin-left: -20px; /* Adiciona margem aos campos de seleção */
+            border-radius: 5px; /* Adiciona borda arredondada aos campos de seleção */
+            border: 1px solid #ccc; /* Adiciona uma borda sólida com cor cinza aos campos de seleção */
+        }
+
+        /* Estilo para a tag option dentro da tag select */
+        .modal-contentAuto select option {
+            background-color: white; /* Cor de fundo das opções */
+            color: black; /* Cor do texto das opções */
+}
+        /* Estilo para remover as setas do input number */
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Estilo para definir o estilo do input number como um campo de texto */
+        input[type="number"] {
+            -moz-appearance: textfield; /* Firefox */
+}
+
+
+        /* Estilo para o conteúdo do modal */
+        .modal-content, .modal-contentAuto, .modal-content1 {
+            background-color: #fefefe; /* Cor de fundo do modal */
+            margin: 15% auto; /* Centraliza verticalmente e horizontalmente */
+            padding: 30px;
+            border: 1px solid #888;
+            width: 80%; /* Largura do modal */
+        }
+        
+        /* Estilo para o botão fechar (x) */
+        .close, .closeAuto, .close1 {
+            background-color: #FF6E6E;
+            font-weight: bold;
+            padding: 10px 20px; /* Adiciona preenchimento aos botões */
+            margin-top: 10px; /* Adiciona margem superior ao botão */
+            border: none; /* Remove a borda do botão */
+            color: white; /* Cor do texto do botão */
+            border-radius: 5px; /* Adiciona borda arredondada ao botão */
+            cursor: pointer; /* Muda o cursor para o formato de mão ao passar por cima do botão */
+            font-weight: bold;
+        }
+
+        .close:hover, .closeAuto:hover, .close1:hover {
+            background-color: #CC5A5A;
+        }
+    </style>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static 'autocrud/images/caricon.ico' %}" type="image/x-icon">
+</head>
+<body>
+    <div class="navbar">
+        <img src="{% static 'autocrud/images/autologo.png' %}" alt="Logo">
+    </div>
+    {% block content %}
+    {% endblock %}
+    <div class="button">
+        <form action="{% url 'autocrud:autos' %}" method="POST">
+            {% csrf_token %}
+            <div class="botoes">
+                <a href="{% url 'home' %}" style="font-size: 14px;">Voltar</a>
+                <input type="submit" value="Sair" name="sair" style="font-size: 14px">
+            </div>
+        </form>
+    </div>
+    <footer>
+        <p>© 2024 Auto CRUD</p>
+    </footer>
+</body>
+<script>
+    var modal = document.getElementById("myModal");
+    var btn = document.getElementById("openModalBtn");
+    var modalAuto = document.getElementById("myModalAuto");
+    var btnAuto = document.getElementById("openModalBtnAuto");
+    var span = document.getElementsByClassName("close")[0];
+    var spanAuto = document.getElementsByClassName("closeAuto")[0];
+    var erro = document.getElementById("erro");
+
+    // Quando o usuário clica no botão, abre o modal
+    btn.onclick = function() {
+    modal.style.display = "block";
+    }
+    
+    btnAuto.onclick = function() {
+    modalAuto.style.display = "block";
+    }
+    
+    if (erro) {
+        modal.style.display = "block";
+    }
+
+    // Quando o usuário clica no botão (x), fecha o modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    spanAuto.onclick = function() {
+        modalAuto.style.display = "none";
+    }
+
+    // Quando o usuário clica fora do modal, fecha-o
+    window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    } else if (event.target == modalAuto){
+        modalAuto.style.display = "none";
+    }
+}
+</script>
+</html>

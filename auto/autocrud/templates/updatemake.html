@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div style="margin-top: 20px;">
+    <form action="{% url 'autocrud:make_update' make.id %}" method="POST">
+        {% csrf_token %}
+        <label for="name">Nome:</label>
+        <input type="text" name="name" placeholder="Ex: Volkswagen" value="{{ make.name }}" required>
+        {% if erro %}
+            <p id="erro" style="color: red;">Your make must be greater than 2 characters</p>
+        {% endif %}
+        <div style="padding: 10px;">
+            <input type="submit" value="Alterar" class="input">
+            <input type="button" value="Cancelar" class="close">
+            <input type="hidden" name="auto">
+        </div>
+    </form>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,24 @@
+views.py:
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponseBadRequest
+
+def auto_update(request):
+    if request.method == 'POST':
+        auto_id = request.POST.get('auto_id')
+        if auto_id:
+            auto = get_object_or_404(Auto, pk=auto_id)
+            # Faça o processamento do auto aqui
+            return HttpResponse("Auto atualizado com sucesso!")
+        else:
+            return HttpResponseBadRequest("ID do auto não fornecido.")
+    else:
+        return HttpResponseBadRequest("Esta visualização só aceita solicitações POST.")
+
+
+template HTML:
+<form method="post" action="{% url 'autocrud:auto_update' %}">
+    {% csrf_token %}
+    <input type="hidden" name="auto_id" value="{{ auto_id }}">
+    <!-- Outros campos do formulário para atualizar o auto -->
+    <button type="submit">Atualizar Auto</button>
+</form>
