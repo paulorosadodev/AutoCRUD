@@ -89,12 +89,21 @@ def auto_create(request):
 
 @login_required(login_url='/crud/login/')
 def auto_update(request, autoid):
-    return HttpResponse('Update')
+    if request.method == "GET":
+        auto = Auto.objects.get(id=autoid)
+        user_id = request.user.id
+        makes = Make.objects.filter(user_id=user_id)
+        makeCount = Make.objects.filter(user_id=user_id).count()
+        return render(request, 'updateauto.html', {'auto': auto, 'makes': makes, 'makeCount': makeCount})
+    else:
+        return HttpResponse('Update')
 
 @login_required(login_url='/crud/login/')
 def auto_delete(request, autoid): #ALTERAR O REQUEST METHOD PARA POST
     auto = get_object_or_404(Auto, id=autoid)
-    auto.delete()
+    autoVerifica = Auto.objects.filter(id=autoid, user_id=request.user.id)
+    if auto == autoVerifica:
+        auto.delete()
     return redirect('autocrud:autos')
 
 @login_required(login_url='/crud/login/')
@@ -128,4 +137,5 @@ def make_update(request, makeid):
 def make_delete(request, makeid): #ALTERAR O REQUEST METHOD PARA POST
     make = get_object_or_404(Make, id=makeid)
     make.delete()
+    print(request.method)
     return redirect('autocrud:makes')
