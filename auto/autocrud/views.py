@@ -128,4 +128,5 @@ def make_update(request, makeid):
 def make_delete(request, makeid): #ALTERAR O REQUEST METHOD PARA POST
     make = get_object_or_404(Make, id=makeid)
     make.delete()
+    print(request.method)
     return redirect('autocrud:makes')
