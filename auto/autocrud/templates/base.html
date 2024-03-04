@@ -310,45 +310,49 @@
     <footer>
         <p>© 2024 Auto CRUD</p>
     </footer>
+    <script>
+        const modal = document.getElementById("myModal");
+        const btn = document.getElementById("openModalBtn");
+        const modalAuto = document.getElementById("myModalAuto");
+        const btnAuto = document.getElementById("openModalBtnAuto");
+        const span = document.querySelector(".close");
+        const spanAuto = document.querySelector(".closeAuto");
+        const erro = document.getElementById("erro");
+
+        // Quando o usuário clica no botão, abre o modal
+        btn.addEventListener('click', () => {
+            modal.style.display = "block";
+        })
+        
+        if (btnAuto) {
+            btnAuto.addEventListener('click', () => {
+                modalAuto.style.display = "block";
+            })
+        }
+        
+        if (erro) {
+            modal.style.display = "block";
+        }
+
+        // Quando o usuário clica no botão (x), fecha o modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        if (spanAuto) {
+            spanAuto.onclick = function() {
+                modalAuto.style.display = "none";
+            }
+        }
+
+        // Quando o usuário clica fora do modal, fecha-o
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            } else if (event.target == modalAuto){
+                modalAuto.style.display = "none";
+            }
+        }
+    </script>
 </body>
-<script>
-    var modal = document.getElementById("myModal");
-    var btn = document.getElementById("openModalBtn");
-    var modalAuto = document.getElementById("myModalAuto");
-    var btnAuto = document.getElementById("openModalBtnAuto");
-    var span = document.getElementsByClassName("close")[0];
-    var spanAuto = document.getElementsByClassName("closeAuto")[0];
-    var erro = document.getElementById("erro");
-
-    // Quando o usuário clica no botão, abre o modal
-    btn.onclick = function() {
-    modal.style.display = "block";
-    }
-    
-    btnAuto.onclick = function() {
-    modalAuto.style.display = "block";
-    }
-    
-    if (erro) {
-        modal.style.display = "block";
-    }
-
-    // Quando o usuário clica no botão (x), fecha o modal
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-
-    spanAuto.onclick = function() {
-        modalAuto.style.display = "none";
-    }
-
-    // Quando o usuário clica fora do modal, fecha-o
-    window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    } else if (event.target == modalAuto){
-        modalAuto.style.display = "none";
-    }
-}
-</script>
 </html>
