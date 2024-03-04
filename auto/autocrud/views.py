@@ -60,7 +60,7 @@ def autos(request):
         makeCount = Make.objects.filter(user_id=user_id).count()
         makes = Make.objects.filter(user_id=user_id)
         autos = Auto.objects.filter(user_id=user_id)
-        return render(request, 'autolist.html', {'makeCount': makeCount, 'makes': makes, 'autos': autos})
+        return render(request, 'autolist.html', {'makeCount': makeCount, 'makes': makes, 'autos': autos })
     # else:
     #   return redirect('login')
 
@@ -72,7 +72,8 @@ def makes(request):
     else:
         user_id = request.user.id
         makes = Make.objects.filter(user_id=user_id)
-        return render(request, 'makelist.html', {'makes': makes})
+        autoCount = Auto.objects.filter(user_id=user_id).count()
+        return render(request, 'makelist.html', {'makes': makes, 'autoCount': autoCount })
 
 @login_required(login_url='/crud/login/')
 def auto_create(request):
@@ -94,7 +95,7 @@ def auto_update(request, autoid):
         user_id = request.user.id
         makes = Make.objects.filter(user_id=user_id)
         makeCount = Make.objects.filter(user_id=user_id).count()
-        return render(request, 'updateauto.html', {'auto': auto, 'makes': makes, 'makeCount': makeCount})
+        return render(request, 'updateauto.html', {'auto': auto, 'makes': makes, 'makeCount': makeCount })
     else:
         return HttpResponse('Update')
 
