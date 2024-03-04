@@ -97,14 +97,21 @@ def auto_update(request, autoid):
         makeCount = Make.objects.filter(user_id=user_id).count()
         return render(request, 'updateauto.html', {'auto': auto, 'makes': makes, 'makeCount': makeCount })
     else:
-        return HttpResponse('Update')
+        auto = Auto.objects.get(id=autoid)
+        auto.nickname = request.POST.get('name')
+        auto.mileage = request.POST.get('mileage')
+        auto.make_id = request.POST.get('make')
+        auto.save()
+        return redirect('autocrud:autos')
 
 @login_required(login_url='/crud/login/')
 def auto_delete(request, autoid): #ALTERAR O REQUEST METHOD PARA POST
-    auto = get_object_or_404(Auto, id=autoid)
-    autoVerifica = Auto.objects.filter(id=autoid, user_id=request.user.id)
-    if auto == autoVerifica:
-        auto.delete()
+    #auto = get_object_or_404(Auto, id=autoid)
+    auto = Auto.objects.get(id=autoid)
+    print(auto)
+    # autoVerifica = Auto.objects.get(id=autoid, user_id=request.user.id)
+    # print(autoVerifica.nickname)
+    # if auto == autoVerifica:
     return redirect('autocrud:autos')
 
 @login_required(login_url='/crud/login/')
