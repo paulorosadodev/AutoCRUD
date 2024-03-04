@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div style="margin-top: 20px;">
+    <form action="{% url 'autocrud:auto_create' %}" method="POST" style="display: inline-block; text-align: left;">
+        {% csrf_token %}
+        <label for="name" style="display: inline-block;">Nickname:</label>
+        <input type="text" name="name" placeholder="Camaro" value="{{ auto.name }}" required style="display: inline-block; margin-bottom: 10px;">
+        <br>
+        <label for="mileage" style="display: inline-block;">Mileage:</label>
+        <input type="number" name="mileage" placeholder="Ex: 20000" required style="display: inline-block; margin-bottom: 10px">
+        <br>
+        <label for="make" style="display: inline-block;">Make:</label>
+        <select name="make" style="display: inline-block;" required>
+            {% for make in makes %}
+                <option value="{{ make.id }}">{{ make.name }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <div style="padding: 10px; text-align: center;">
+            <input type="submit" value="Criar" class="input">
+            <input type="button" value="Cancelar" class="closeAuto">
+            <input type="hidden" name="auto">
+        </div>
+    </form>
+</div>
+
+{% endblock content %}
