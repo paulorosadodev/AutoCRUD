@@ -29,7 +29,8 @@ def cadastro(request):
         
         user = User.objects.create_user(username=username, email=email, password=password)
         user.save
-        return redirect('autocrud:login')
+        cadastrado = True
+        return redirect('home')
     else:
         return render(request, 'cadastro.html')
 
@@ -91,7 +92,7 @@ def auto_update(request, autoid):
     return HttpResponse('Update')
 
 @login_required(login_url='/crud/login/')
-def auto_delete(request, autoid):
+def auto_delete(request, autoid): #ALTERAR O REQUEST METHOD PARA POST
     auto = get_object_or_404(Auto, id=autoid)
     auto.delete()
     return redirect('autocrud:autos')
@@ -124,7 +125,7 @@ def make_update(request, makeid):
         return redirect('autocrud:makes')
 
 @login_required(login_url='/crud/login/')
-def make_delete(request, makeid):
+def make_delete(request, makeid): #ALTERAR O REQUEST METHOD PARA POST
     make = get_object_or_404(Make, id=makeid)
     make.delete()
     return redirect('autocrud:makes')

@@ -47,31 +47,28 @@
                     <p style="margin-top: 10px;">Please add a make before you add an auto.</p>
                 {% endif %}
         </div>
-    {% endif %}
-
-    <p style="margin-top: 30px;">
-        <a href="{% url 'autocrud:makes' %}" class="viewmakes">View makes ( {{ makeCount }} )</a>
-        <button class="plus" id="openModalBtn" style="padding: 10px; margin-left: 26px;">Add a make</button>
-    </p>
-
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <h2 style="margin-bottom: 20px">Adding a make</h2>
-            <form action="{% url 'autocrud:make_create' %}" method="POST">
-                {% csrf_token %}
-                <label for="name">Nome:</label>
-                <input type="text" name="name" placeholder="Ex: Volkswagen" required>
-                {% if erro %}
-                    <p id="erro" style="color: red;">Your make must be greater than 2 characters</p>
-                {% endif %}
-                <div style="padding: 10px;">
-                    <input type="submit" value="Criar" class="input">
-                    <input type="button" value="Cancelar" class="close">
-                    <input type="hidden" name="auto">
-                </div>
-            </form>
+        {% endif %}
+        
+        <p style="margin-top: 30px;">
+            <a href="{% url 'autocrud:makes' %}" class="viewmakes">View makes ( {{ makeCount }} )</a>
+            <button class="plus" id="openModalBtn" style="padding: 10px; margin-left: 26px;">Add a make</button>
+        </p>
+    
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <h2 style="margin-bottom: 20px">Adding a make</h2>
+                <form action="{% url 'autocrud:make_create' %}" method="POST">
+                    {% csrf_token %}
+                    <label for="name">Nome:</label>
+                    <input type="text" name="name" placeholder="Ex: Volkswagen" required>
+                    <div style="padding: 10px;">
+                        <input type="submit" value="Criar" class="input">
+                        <input type="button" value="Cancelar" class="close">
+                        <input type="hidden" name="auto">
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
 
     <div id="myModalAuto" class="modalAuto">
         <div class="modal-contentAuto">
