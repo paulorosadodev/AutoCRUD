@@ -106,12 +106,11 @@ def auto_update(request, autoid):
 
 @login_required(login_url='/crud/login/')
 def auto_delete(request, autoid): #ALTERAR O REQUEST METHOD PARA POST
-    #auto = get_object_or_404(Auto, id=autoid)
-    auto = Auto.objects.get(id=autoid)
-    print(auto)
-    # autoVerifica = Auto.objects.get(id=autoid, user_id=request.user.id)
-    # print(autoVerifica.nickname)
-    # if auto == autoVerifica:
+    auto = get_object_or_404(Auto, id=autoid)
+    if verifica(auto.user_id, request.user.id):
+        auto.delete()
+    else:
+        return HttpResponse('Você não pode deletar esse carro')
     return redirect('autocrud:autos')
 
 @login_required(login_url='/crud/login/')
@@ -147,3 +146,10 @@ def make_delete(request, makeid): #ALTERAR O REQUEST METHOD PARA POST
     make.delete()
     print(request.method)
     return redirect('autocrud:makes')
+
+
+def verifica(objUserId, userId):
+    if objUserId == userId:
+        return True
+    else:
+        return False
