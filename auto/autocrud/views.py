@@ -97,7 +97,11 @@ def auto_update(request, autoid):
             return HttpResponse("Esse carro não existe")
         user_id = request.user.id
         if verifica(auto.user_id, user_id):
-            return redirect('autocrud:autos')
+            user_id = request.user.id
+            makeCount = Make.objects.filter(user_id=user_id).count()
+            makes = Make.objects.filter(user_id=user_id)
+            autos = Auto.objects.filter(user_id=user_id)
+            return render(request, 'updateauto.html', {'makeCount': makeCount, 'makes': makes, 'autos': autos, 'autoId': autoid, 'auto': auto})
         else:
             return HttpResponse('Você não pode editar esse carro')
     else:
