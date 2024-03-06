@@ -113,7 +113,7 @@ def auto_update(request, autoid):
         return redirect('autocrud:autos')
 
 @login_required(login_url='/crud/login/')
-def auto_delete(request, autoid): #ALTERAR O REQUEST METHOD PARA POST
+def auto_delete(request, autoid): 
     try:
         auto = Auto.objects.get(id=autoid)
     except:
@@ -147,7 +147,9 @@ def make_update(request, makeid):
         try:
             make = Make.objects.get(id=makeid)
             if verifica(make.user_id, request.user.id):
-                return render(request, 'updatemake.html', {'make': make})
+                makes = Make.objects.filter(user_id=request.user.id)
+                autoCount = Auto.objects.filter(user_id=request.user.id).count()
+                return render(request, 'updatemake.html', {'make': make, 'makes': makes, 'autoCount': autoCount })
             else:
                 return HttpResponse("Você não pode editar essa marca")
         except:
@@ -160,7 +162,7 @@ def make_update(request, makeid):
         return redirect('autocrud:makes')
 
 @login_required(login_url='/crud/login/')
-def make_delete(request, makeid): #ALTERAR O REQUEST METHOD PARA POST
+def make_delete(request, makeid):
     try:
         make = Make.objects.get(id=makeid)
     except:
@@ -170,7 +172,6 @@ def make_delete(request, makeid): #ALTERAR O REQUEST METHOD PARA POST
         return redirect('autocrud:makes')
     else:
         return HttpResponse("Você não pode deletar essa marca")
-
 
 def verifica(objUserId, userId):
     if objUserId == userId:

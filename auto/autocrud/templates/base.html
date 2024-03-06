@@ -225,7 +225,7 @@
         }
 
             /* Estilo para o modal */
-        .modal, .modalAuto, .modal1, .modalAutoUpdate {
+        .modal, .modalAuto, .modal1, .modalAutoUpdate, .modalMakeUpdate {
             display: none; /* Oculta o modal por padrão */
             position: fixed; /* Permite que o modal seja posicionado de forma fixa na tela */
             z-index: 1; /* Define a ordem de empilhamento do modal */
@@ -264,7 +264,7 @@
 
 
         /* Estilo para o conteúdo do modal */
-        .modal-content, .modal-contentAuto, .modal-content1, .modal-contentAutoUpdate {
+        .modal-content, .modal-contentAuto, .modal-content1, .modal-contentAutoUpdate, .modal-contentMakeUpdate {
             background-color: #fefefe; /* Cor de fundo do modal */
             margin: 15% auto; /* Centraliza verticalmente e horizontalmente */
             padding: 30px;
@@ -273,7 +273,7 @@
         }
         
         /* Estilo para o botão fechar (x) */
-        .close, .closeAuto, .close1, .closeAutoUpdate {
+        .close, .closeAuto, .close1, .closeAutoUpdate, .closeMakeUpdate {
             background-color: #FF6E6E;
             font-weight: bold;
             padding: 10px 20px; /* Adiciona preenchimento aos botões */
@@ -285,7 +285,7 @@
             font-weight: bold;
         }
 
-        .close:hover, .closeAuto:hover, .close1:hover, .closeAutoUpdate:hover {
+        .close:hover, .closeAuto:hover, .close1:hover, .closeAutoUpdate:hover, .closeMakeUpdate:hover {
             background-color: #CC5A5A;
         }
     </style>
@@ -317,9 +317,12 @@
         const btnAuto = document.getElementById("openModalBtnAuto");
         const modalAutoUpdate = document.getElementById("myModalAutoUpdate");
         const btnAutoUpdate = document.getElementById("openModalBtnAutoUpdate");
+        const modalMakeUpdate = document.getElementById("myModalMakeUpdate");
+        const btnMakeUpdate = document.getElementById("openModalBtnMakeUpdate");
         const span = document.querySelector(".close");
         const spanAuto = document.querySelector(".closeAuto");
         const spanAutoUpdate = document.querySelector(".closeAutoUpdate");
+        const spanMakeUpdate = document.querySelector(".closeMakeUpdate");
         const erro = document.getElementById("erro");
 
         // Quando o usuário clica no botão, abre o modal
@@ -336,7 +339,10 @@
         if (modalAutoUpdate) {
             modalAutoUpdate.style.display = "block";
         }
-
+        
+        if (modalMakeUpdate) {
+            modalMakeUpdate.style.display = "block";
+        }
             
         if (erro) {
             modal.style.display = "block";
@@ -359,6 +365,12 @@
             }
         }
 
+        if (spanMakeUpdate) {
+            spanMakeUpdate.onclick = function() {
+                modalMakeUpdate.style.display = "none";
+            }
+        }
+
         // Quando o usuário clica fora do modal, fecha-o
         window.onclick = function(event) {
             if (event.target == modal) {
@@ -367,6 +379,8 @@
                 modalAuto.style.display = "none";
             } else if (event.target == modalAutoUpdate) {
                 modalAutoUpdate.style.display = "none";
+            } else if (event.target == modalMakeUpdate) {
+                modalMakeUpdate.style.display = "none";
             }
         }
     </script>

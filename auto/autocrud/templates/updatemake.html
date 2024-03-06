@@ -1,21 +1,20 @@
-{% extends "base.html" %}
+{% extends "makelist.html" %}
 
-{% block content %}
+{% block MakeUpdate %}
 
-<div style="margin-top: 20px;">
-    <form action="{% url 'autocrud:make_update' make.id %}" method="POST">
-        {% csrf_token %}
-        <label for="name">Nome:</label>
-        <input type="text" name="name" placeholder="Ex: Volkswagen" value="{{ make.name }}" required>
-        {% if erro %}
-            <p id="erro" style="color: red;">Your make must be greater than 2 characters</p>
-        {% endif %}
-        <div style="padding: 10px;">
-            <input type="submit" value="Alterar" class="input">
-            <input type="button" value="Cancelar" class="close">
-            <input type="hidden" name="auto">
-        </div>
-    </form>
-</div>
+<div id="myModalMakeUpdate" class="modalMakeUpdate">
+    <div class="modal-contentMakeUpdate">
+        <h2 style="margin-bottom: 20px">Updating a make</h2>
+        <form action="{% url 'autocrud:make_update' make.id %}" method="POST">
+            {% csrf_token %}
+            <label for="name">Nome:</label>
+            <input type="text" name="name" value="{{ make.name }}" required>
+            <div style="padding: 10px;">
+                <input type="submit" value="Criar" class="input">
+                <a href="{% url 'autocrud:makes' %}"><input type="button" value="Cancelar" class="closeMakeUpdate"></a>
+            </div>
+        </form>
+    </div>
+    </div>
 
-{% endblock content %}
+{% endblock MakeUpdate %}

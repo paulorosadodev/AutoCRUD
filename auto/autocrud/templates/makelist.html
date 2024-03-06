@@ -40,6 +40,7 @@
 
 <div id="myModal" class="modal">
 <div class="modal-content">
+    <h2 style="margin-bottom: 20px">Adding a make</h2>
     <form action="{% url 'autocrud:make_create' %}" method="POST">
         {% csrf_token %}
         <label for="name">Nome:</label>
@@ -55,6 +56,9 @@
     <a href="{% url 'autocrud:autos' %}" class="viewmakes" style="margin-right: 3px;">View autos ( {{ autoCount }} )</a>
     <button class="plus" id="openModalBtn" style="padding: 10px; margin-left: 26px;">Add a make</button>
 </p>
+
+{% block MakeUpdate %}
+{% endblock MakeUpdate %}
 
 {% endblock %}
 
