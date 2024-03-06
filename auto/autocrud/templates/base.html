@@ -225,7 +225,7 @@
         }
 
             /* Estilo para o modal */
-        .modal, .modalAuto, .modal1 {
+        .modal, .modalAuto, .modal1, .modalAutoUpdate {
             display: none; /* Oculta o modal por padrão */
             position: fixed; /* Permite que o modal seja posicionado de forma fixa na tela */
             z-index: 1; /* Define a ordem de empilhamento do modal */
@@ -238,7 +238,7 @@
         }
         
         /* Estilo para a tag select */
-        .modal-contentAuto select {
+        .modal-contentAuto select, .modal-contentAutoUpdate select {
             padding: 10px; /* Adiciona preenchimento aos campos de seleção */
             margin-left: -20px; /* Adiciona margem aos campos de seleção */
             border-radius: 5px; /* Adiciona borda arredondada aos campos de seleção */
@@ -246,7 +246,7 @@
         }
 
         /* Estilo para a tag option dentro da tag select */
-        .modal-contentAuto select option {
+        .modal-contentAuto select option, .modal-contentAutoUpdate select option {
             background-color: white; /* Cor de fundo das opções */
             color: black; /* Cor do texto das opções */
 }
@@ -264,7 +264,7 @@
 
 
         /* Estilo para o conteúdo do modal */
-        .modal-content, .modal-contentAuto, .modal-content1 {
+        .modal-content, .modal-contentAuto, .modal-content1, .modal-contentAutoUpdate {
             background-color: #fefefe; /* Cor de fundo do modal */
             margin: 15% auto; /* Centraliza verticalmente e horizontalmente */
             padding: 30px;
@@ -273,7 +273,7 @@
         }
         
         /* Estilo para o botão fechar (x) */
-        .close, .closeAuto, .close1 {
+        .close, .closeAuto, .close1, .closeAutoUpdate {
             background-color: #FF6E6E;
             font-weight: bold;
             padding: 10px 20px; /* Adiciona preenchimento aos botões */
@@ -285,7 +285,7 @@
             font-weight: bold;
         }
 
-        .close:hover, .closeAuto:hover, .close1:hover {
+        .close:hover, .closeAuto:hover, .close1:hover, .closeAutoUpdate:hover {
             background-color: #CC5A5A;
         }
     </style>
@@ -315,8 +315,11 @@
         const btn = document.getElementById("openModalBtn");
         const modalAuto = document.getElementById("myModalAuto");
         const btnAuto = document.getElementById("openModalBtnAuto");
+        const modalAutoUpdate = document.getElementById("myModalAutoUpdate");
+        const btnAutoUpdate = document.getElementById("openModalBtnAutoUpdate");
         const span = document.querySelector(".close");
         const spanAuto = document.querySelector(".closeAuto");
+        const spanAutoUpdate = document.querySelector(".closeAutoUpdate");
         const erro = document.getElementById("erro");
 
         // Quando o usuário clica no botão, abre o modal
@@ -330,6 +333,12 @@
             })
         }
         
+        if (btnAutoUpdate) {
+            btnAutoUpdate.addEventListener('click', () => {
+                modalAutoUpdate.style.display = "block";
+            })
+        }
+            
         if (erro) {
             modal.style.display = "block";
         }
@@ -345,12 +354,20 @@
             }
         }
 
+        if (spanAutoUpdate) {
+            spanAutoUpdate.onclick = function() {
+                modalAutoUpdate.style.display = "none";
+            }
+        }
+
         // Quando o usuário clica fora do modal, fecha-o
         window.onclick = function(event) {
             if (event.target == modal) {
                 modal.style.display = "none";
             } else if (event.target == modalAuto){
                 modalAuto.style.display = "none";
+            } else if (event.target == modalAutoUpdate) {
+                modalAutoUpdate.style.display = "none";
             }
         }
     </script>

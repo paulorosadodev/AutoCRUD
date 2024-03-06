@@ -90,12 +90,16 @@ def auto_create(request):
 
 @login_required(login_url='/crud/login/')
 def auto_update(request, autoid):
-    if request.method == "GET":
-        auto = Auto.objects.get(id=autoid)
+    if request.method == 'GET':
+        try:
+            auto = Auto.objects.get(id=autoid)
+        except:
+            return HttpResponse("Esse carro não existe")
         user_id = request.user.id
-        makes = Make.objects.filter(user_id=user_id)
-        makeCount = Make.objects.filter(user_id=user_id).count()
-        return render(request, 'updateauto.html', {'auto': auto, 'makes': makes, 'makeCount': makeCount })
+        if verifica(auto.user_id, user_id):
+            return redirect('autocrud:autos')
+        else:
+            return HttpResponse('Você não pode editar esse carro')
     else:
         auto = Auto.objects.get(id=autoid)
         auto.nickname = request.POST.get('name')
@@ -106,7 +110,10 @@ def auto_update(request, autoid):
 
 @login_required(login_url='/crud/login/')
 def auto_delete(request, autoid): #ALTERAR O REQUEST METHOD PARA POST
-    auto = get_object_or_404(Auto, id=autoid)
+    try:
+        auto = Auto.objects.get(id=autoid)
+    except:
+        return HttpResponse("Esse carro não existe")
     if verifica(auto.user_id, request.user.id):
         auto.delete()
     else:
@@ -123,6 +130,8 @@ def make_create(request):
         if len(nome) > 2:
             make = Make(name=nome, user_id=user_id)
             make.save()
+        else:
+            return HttpResponse('Your make must be greater than 2 characters')
     if 'auto' in request.POST:
         return redirect('autocrud:autos')
     else:
@@ -131,8 +140,14 @@ def make_create(request):
 @login_required(login_url='/crud/login/')
 def make_update(request, makeid):
     if request.method == 'GET':
-        make = Make.objects.get(id=makeid)
-        return render(request, 'updatemake.html', {'make': make})
+        try:
+            make = Make.objects.get(id=makeid)
+            if verifica(make.user_id, request.user.id):
+                return render(request, 'updatemake.html', {'make': make})
+            else:
+                return HttpResponse("Você não pode editar essa marca")
+        except:
+            return HttpResponse("Essa marca não existe")
     else:
         make = get_object_or_404(Make, id=makeid)
         newName = request.POST.get('name')
@@ -142,10 +157,15 @@ def make_update(request, makeid):
 
 @login_required(login_url='/crud/login/')
 def make_delete(request, makeid): #ALTERAR O REQUEST METHOD PARA POST
-    make = get_object_or_404(Make, id=makeid)
-    make.delete()
-    print(request.method)
-    return redirect('autocrud:makes')
+    try:
+        make = Make.objects.get(id=makeid)
+    except:
+        return HttpResponse("Essa marca não existe")
+    if verifica(make.user_id, request.user.id):
+        make.delete()
+        return redirect('autocrud:makes')
+    else:
+        return HttpResponse("Você não pode deletar essa marca")
 
 
 def verifica(objUserId, userId):
