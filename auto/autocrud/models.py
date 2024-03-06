@@ -18,7 +18,7 @@ class Auto(models.Model):
     user_specific_id = models.PositiveIntegerField()
 
     def __str__(self):
-        return self.name
+        return self.nickname
     
     def save(self, *args, **kwargs):
         if not self.id:  # Se o registro ainda não foi salvo
