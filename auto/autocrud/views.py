@@ -60,7 +60,7 @@ def autos(request):
         makeCount = Make.objects.filter(user_id=user_id).count()
         makes = Make.objects.filter(user_id=user_id)
         autos = Auto.objects.filter(user_id=user_id)
-        return render(request, 'autolist.html', {'makeCount': makeCount, 'makes': makes, 'autos': autos })
+        return render(request, 'autolist.html', {'makeCount': makeCount, 'makes': makes, 'autos': autos, 'previous_url': request.META.get('HTTP_REFERER', None)})
     # else:
     #   return redirect('login')
 
@@ -73,7 +73,7 @@ def makes(request):
         user_id = request.user.id
         makes = Make.objects.filter(user_id=user_id)
         autoCount = Auto.objects.filter(user_id=user_id).count()
-        return render(request, 'makelist.html', {'makes': makes, 'autoCount': autoCount })
+        return render(request, 'makelist.html', {'makes': makes, 'autoCount': autoCount, 'previous_url': request.META.get('HTTP_REFERER', None)})
 
 @login_required(login_url='/crud/login/')
 def auto_create(request):
